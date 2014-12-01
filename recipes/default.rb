@@ -26,13 +26,15 @@
 
 case node['platform_family']
 when 'debian'
-  apt_repository 'logstash-forwarder' do
-    uri 'http://packages.elasticsearch.org/logstashforwarder/debian'
-    components ['stable','main']
-    key 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+  cookbook_file "#{Chef::Config[:file_cache_path]}/logstash-forwarder_amd64.deb" do
+    source "logstash-forwarder_#{node["logstash-forwarder"]["version"]}_amd64.deb"
+  end
+  package "logstash-forwarder" do
+    source "#{Chef::Config[:file_cache_path]}/logstash-forwarder_amd64.deb"
+    provider Chef::Provider::Package::Dpkg
+    action :install
   end
 
-  package 'logstash-forwarder'
 when 'rhel'
   yum_repository 'logstash-forwarder' do
     description 'logstash forwarder'
