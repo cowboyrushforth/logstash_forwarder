@@ -27,7 +27,7 @@
 case node['platform_family']
 when 'debian'
   cookbook_file "#{Chef::Config[:file_cache_path]}/logstash-forwarder_amd64.deb" do
-    source "logstash-forwarder_#{node["logstash-forwarder"]["version"]}_amd64.deb"
+    source "logstash-forwarder_#{node["logstash_forwarder"]["version"]}_amd64.deb"
   end
   package "logstash-forwarder" do
     source "#{Chef::Config[:file_cache_path]}/logstash-forwarder_amd64.deb"
